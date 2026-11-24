@@ -1,0 +1,24 @@
+Guided Exercise: Explain and Investigate RPM Software Packages
+
+Q1: Prepare the lab environment and log in to servera as student.
+A: lab start software-rpm
+   ssh student@servera
+
+Q2: Query package info, file list, and install scripts for rhcsa-script-1.0.0-1.noarch.rpm.
+A: rpm -qpi rhcsa-script-1.0.0-1.noarch.rpm
+   rpm -qpl rhcsa-script-1.0.0-1.noarch.rpm
+   rpm -qp --scripts rhcsa-script-1.0.0-1.noarch.rpm
+
+Q3: List and extract contents of rhcsa-script-1.0.0-1.noarch.rpm into /home/student.
+A: rpm2cpio rhcsa-script-1.0.0-1.noarch.rpm | cpio -tv
+   rpm2cpio rhcsa-script-1.0.0-1.noarch.rpm | cpio -idv
+
+Q4: Install rhcsa-script-1.0.0-1.noarch.rpm and verify installation.
+A: sudo rpm -ivh rhcsa-script-1.0.0-1.noarch.rpm
+   rpm -q rhcsa-script
+
+Q5: Reconnect via SSH to observe updated MOTD, exit, and finish the lab exercise.
+A: exit
+   ssh student@servera
+   exit
+   lab finish software-rpm

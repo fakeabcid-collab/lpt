@@ -1,0 +1,22 @@
+Lab: Configure and Manage a Server (Comprehensive Review 3)
+
+Q1: Prepare the lab environment and log in to serverb as student.
+A: lab start rhcsa-rh124-review3
+   ssh student@serverb
+
+Q2: Generate passphrase-less SSH key pair ~/.ssh/review3_key and copy public key to student@servera.
+A: ssh-keygen -f /home/student/.ssh/review3_key -N ""
+   ssh-copy-id -i .ssh/review3_key.pub student@servera
+   ssh -i .ssh/review3_key student@servera exit
+
+Q3: Disable root SSH login and password authentication on serverb, then reload sshd.
+A: sudo vim /etc/ssh/sshd_config   (set: PermitRootLogin no and PasswordAuthentication no)
+   sudo systemctl reload sshd.service
+
+Q4: Install the zsh package on serverb.
+A: sudo dnf install zsh
+
+Q5: Exit serverb, then grade and finish the lab exercise on workstation.
+A: exit
+   lab grade rhcsa-rh124-review3
+   lab finish rhcsa-rh124-review3

@@ -1,0 +1,24 @@
+Lab: Configure and Secure SSH
+
+Q1: Prepare the lab environment, log in to servera, and switch to production1 (password: redhat).
+A: lab start ssh-review
+   ssh student@servera
+   su - production1
+
+Q2: Generate passphrase-less SSH keys for production1 and copy the public key to production1@serverb.
+A: ssh-keygen
+   ssh-copy-id production1@serverb
+
+Q3: Log in to serverb as production1, switch to root (password: redhat), disable root login & password auth, and reload sshd.
+A: ssh production1@serverb
+   su -
+   vim /etc/ssh/sshd_config   (set: PermitRootLogin no and PasswordAuthentication no)
+   systemctl reload sshd
+
+Q4: Exit all shells back to workstation, then grade and finish the lab exercise.
+A: exit
+   exit
+   exit
+   exit
+   lab grade ssh-review
+   lab finish ssh-review

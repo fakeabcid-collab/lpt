@@ -1,0 +1,22 @@
+Lab: Manage Networks (Comprehensive Review 4)
+
+Q1: Prepare the lab environment and log in via serverb console as root.
+A: lab start rhcsa-rh124-review4
+   (On serverb console: log in as student -> sudo -i)
+
+Q2: Create and activate static connection 'static' on eth0 (172.25.250.111/24, gateway & DNS 172.25.250.254).
+A: nmcli connection add con-name static type ethernet ifname eth0 ipv4.addresses '172.25.250.111/24' ipv4.gateway '172.25.250.254' ipv4.dns '172.25.250.254' ipv4.method manual
+   nmcli connection up static
+
+Q3: Set serverb hostname to server-review4.lab4.example.com and map client-review4 to 172.25.250.10 in /etc/hosts.
+A: hostnamectl hostname server-review4.lab4.example.com
+   echo "172.25.250.10 client-review4" >> /etc/hosts
+
+Q4: Add secondary IP 172.25.250.211/24 to 'static', activate it, then restore original 'System eth0' profile.
+A: nmcli connection modify static +ipv4.addresses '172.25.250.211/24'
+   nmcli connection up static
+   nmcli connection up "System eth0"
+
+Q5: Grade and finish the lab exercise on workstation.
+A: lab grade rhcsa-rh124-review4
+   lab finish rhcsa-rh124-review4

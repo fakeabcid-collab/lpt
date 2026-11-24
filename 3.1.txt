@@ -1,0 +1,39 @@
+Guided Exercise: Manage Files with Command-line Tools
+
+Q1: Prepare the lab environment on workstation.
+A: lab start files-manage
+
+Q2: Log in to servera as student and create Music, Pictures, and Videos directories.
+A: ssh student@servera
+   mkdir Music Pictures Videos
+
+Q3: Create 6 empty files each for songX.mp3, snapX.jpg, and filmX.avi.
+A: touch song1.mp3 song2.mp3 song3.mp3 song4.mp3 song5.mp3 song6.mp3
+   touch snap1.jpg snap2.jpg snap3.jpg snap4.jpg snap5.jpg snap6.jpg
+   touch film1.avi film2.avi film3.avi film4.avi film5.avi film6.avi
+
+Q4: Move .mp3 files to Music, .jpg files to Pictures, and .avi files to Videos.
+A: mv song1.mp3 song2.mp3 song3.mp3 song4.mp3 song5.mp3 song6.mp3 Music
+   mv snap1.jpg snap2.jpg snap3.jpg snap4.jpg snap5.jpg snap6.jpg Pictures
+   mv film1.avi film2.avi film3.avi film4.avi film5.avi film6.avi Videos
+
+Q5: Create friends, family, and work subdirectories in a single command.
+A: mkdir friends family work
+
+Q6: Copy files containing numbers 1 and 2 to friends, and 3 and 4 to family.
+A: cd friends
+   cp ~/Music/song1.mp3 ~/Music/song2.mp3 ~/Pictures/snap1.jpg ~/Pictures/snap2.jpg ~/Videos/film1.avi ~/Videos/film2.avi .
+   cd ../family
+   cp ~/Music/song3.mp3 ~/Music/song4.mp3 ~/Pictures/snap3.jpg ~/Pictures/snap4.jpg ~/Videos/film3.avi ~/Videos/film4.avi .
+
+Q7: Copy family and friends directories with contents into work.
+A: cd ../work
+   cp -r ~/family ~/friends .
+
+Q8: Recursively delete family, friends, and work directories, then exit servera.
+A: cd ..
+   rm -r family friends work
+   exit
+
+Q9: Finish the lab exercise on workstation.
+A: lab finish files-manage

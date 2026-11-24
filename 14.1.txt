@@ -1,0 +1,21 @@
+Guided Exercise: Analyze and Manage Remote Servers
+
+Q1: Prepare the lab environment, log in to servera, and enable/start Cockpit web console.
+A: lab start support-cockpit
+   ssh student@servera
+   sudo systemctl enable --now cockpit.socket
+
+Q2: Access web console in Firefox, log in as student, and switch to administrative access.
+A: Open https://servera.lab.example.com:9090 -> log in as student -> click Limited access -> authenticate
+
+Q3: Inspect Usage metrics and System Logs, and add secondary IPv4 172.25.250.99/24 to eth0 via Networking.
+A: Overview -> View metrics and history; Logs -> filter priority; Networking -> eth0 -> IPv4 edit -> add 172.25.250.99/24
+
+Q4: Create user manager1 in Accounts, then add manager1 to the wheel group via web console Terminal.
+A: Accounts -> Create new account (manager1)
+   Terminal -> sudo usermod -aG wheel manager1 && id manager1
+
+Q5: Start and enable the psacct service in Services, log out of web console, exit servera, and finish lab.
+A: Services -> psacct -> Start and Enable
+   exit
+   lab finish support-cockpit

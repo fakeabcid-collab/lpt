@@ -1,0 +1,38 @@
+Lab: Manage Local Users and Groups
+
+Q1: Prepare the lab environment, log in to serverb, and switch to root.
+A: lab start users-review
+   ssh student@serverb
+   sudo -i
+
+Q2: Set default password max age to 30 days for newly created users in /etc/login.defs.
+A: vim /etc/login.defs   (set: PASS_MAX_DAYS 30)
+
+Q3: Create the consultants group with GID 35000 and grant full sudo access via /etc/sudoers.d/consultants.
+A: groupadd -g 35000 consultants
+   echo "%consultants  ALL=(ALL) ALL" > /etc/sudoers.d/consultants
+
+Q4: Create consultant1, consultant2, and consultant3 with supplementary group consultants, and set passwords to redhat.
+A: useradd -G consultants consultant1 && passwd consultant1
+   useradd -G consultants consultant2 && passwd consultant2
+   useradd -G consultants consultant3 && passwd consultant3
+
+Q5: Set all three consultant accounts to expire in 90 days.
+A: EXP_DATE=$(date -d "+90 days" +%F)
+   chage -E $EXP_DATE consultant1
+   chage -E $EXP_DATE consultant2
+   chage -E $EXP_DATE consultant3
+
+Q6: Set consultant2 password max age to 15 days.
+A: chage -M 15 consultant2
+
+Q7: Force all three consultant users to change their passwords on first login.
+A: chage -d 0 consultant1
+   chage -d 0 consultant2
+   chage -d 0 consultant3
+
+Q8: Exit back to workstation, then grade and finish the lab exercise.
+A: exit
+   exit
+   lab grade users-review
+   lab finish users-review

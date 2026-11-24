@@ -1,0 +1,26 @@
+Lab: Mount File Systems and Find Files (Comprehensive Review 5)
+
+Q1: Prepare the lab environment, log in to serverb, and switch to root.
+A: lab start rhcsa-rh124-review5
+   ssh student@serverb
+   sudo -i
+
+Q2: Identify unmounted XFS partition /dev/vdb1 and mount it on /review5-disk.
+A: lsblk -fs
+   mkdir /review5-disk
+   mount /dev/vdb1 /review5-disk
+
+Q3: Find review5-path and save its absolute path to /review5-disk/review5-path.txt.
+A: find / -iname review5-path 2>/dev/null > /review5-disk/review5-path.txt
+
+Q4: Find files owned by contractor1 and group contractor with 640 permissions, and save to /review5-disk/review5-perms.txt.
+A: find / -user contractor1 -group contractor -perm 640 2>/dev/null > /review5-disk/review5-perms.txt
+
+Q5: Find all regular files of exact size 100 bytes and save paths to /review5-disk/review5-size.txt.
+A: find / -type f -size 100c 2>/dev/null > /review5-disk/review5-size.txt
+
+Q6: Exit back to workstation, then grade and finish the lab exercise.
+A: exit
+   exit
+   lab grade rhcsa-rh124-review5
+   lab finish rhcsa-rh124-review5

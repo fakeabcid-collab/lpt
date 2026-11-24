@@ -1,0 +1,31 @@
+Guided Exercise: Manage Local Group Accounts
+
+Q1: Prepare the lab environment, log in to servera, and switch to root.
+A: lab start users-group
+   ssh student@servera
+   sudo -i
+
+Q2: Create group operators with GID 30000 and group admin with default GID.
+A: groupadd -g 30000 operators
+   groupadd admin
+
+Q3: Add operator1, operator2, and operator3 to the operators supplementary group.
+A: usermod -aG operators operator1
+   usermod -aG operators operator2
+   usermod -aG operators operator3
+
+Q4: Add sysadmin1, sysadmin2, and sysadmin3 to the admin supplementary group.
+A: usermod -aG admin sysadmin1
+   usermod -aG admin sysadmin2
+   usermod -aG admin sysadmin3
+
+Q5: Grant full sudo privileges to members of the admin group and verify as sysadmin1.
+A: echo "%admin ALL=(ALL) ALL" >> /etc/sudoers.d/admin
+   su - sysadmin1
+   sudo cat /etc/sudoers.d/admin
+
+Q6: Exit back to workstation and finish the lab exercise.
+A: exit
+   exit
+   exit
+   lab finish users-group

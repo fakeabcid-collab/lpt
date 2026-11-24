@@ -1,0 +1,39 @@
+Lab: Monitor and Manage Linux Processes
+
+Q1: Prepare the lab environment and open two terminals logged in to serverb as student.
+A: lab start processes-review
+   ssh student@serverb
+
+Q2: Create executable /home/student/bin/process101 script (50,000 loop iterations) and start top in right terminal.
+A: mkdir /home/student/bin
+   vim /home/student/bin/process101
+   chmod +x /home/student/bin/process101
+   top   (in right terminal)
+
+Q3: Check CPU count, start process101 in background, and customize/save top view.
+A: grep "model name" /proc/cpuinfo | wc -l
+   cd /home/student/bin && process101 &
+   In top: Shift+M (sort by memory), Shift+P (sort by CPU), Shift+B (toggle bold off), Shift+W (save to ~/.config/procps/toprc)
+
+Q4: Copy process101 to process102 (100,000 iterations) and process103 (800,000 iterations) and run both in background.
+A: cp process101 process102 && vim process102   (change limit to 100000)
+   process102 &
+   cp process101 process103 && vim process103   (change limit to 800000)
+   process103 &
+
+Q5: Switch to root, suspend process101 (SIGSTOP), verify state T, then resume it (SIGCONT).
+A: su -
+   pkill -SIGSTOP process101
+   ps jT
+   pkill -SIGCONT process101
+
+Q6: Terminate process101, process102, and process103 using pkill.
+A: pkill process101
+   pkill process102
+   pkill process103
+
+Q7: Exit shells, return to workstation, then grade and finish the lab exercise.
+A: exit
+   exit
+   lab grade processes-review
+   lab finish processes-review

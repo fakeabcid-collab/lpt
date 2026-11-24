@@ -1,0 +1,12 @@
+Guided Exercise: Edit Text Files from the Shell Prompt
+
+Q1: Prepare the lab environment and log in to servera as student.
+A: lab start edit-editfile
+   ssh student@servera
+
+Q2: Launch vimtutor to practice navigation (h,j,k,l), quitting (:q!), deleting (x), inserting (i), and saving (:wq).
+A: vimtutor
+
+Q3: Exit servera and finish the lab exercise on workstation.
+A: exit
+   lab finish edit-editfile

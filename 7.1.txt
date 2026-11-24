@@ -1,0 +1,33 @@
+Guided Exercise: Manage File System Permissions from the Command Line
+
+Q1: Prepare the lab environment, log in to servera, and switch to root.
+A: lab start perms-cli
+   ssh student@servera
+   sudo -i
+
+Q2: Create /home/consultants and change its group ownership to consultants.
+A: mkdir /home/consultants
+   chown :consultants /home/consultants
+
+Q3: Add group write permission using symbolic method, then set rwxrwx--- using octal method.
+A: chmod g+w /home/consultants
+   chmod 770 /home/consultants
+   ls -ld /home/consultants
+
+Q4: Exit root, switch to consultant1 (password: redhat), and create /home/consultants/consultant1.txt.
+A: exit
+   su - consultant1
+   cd /home/consultants
+   touch consultant1.txt
+
+Q5: Exit consultant1, switch to consultant2 (password: redhat), and create /home/consultants/consultant2.txt.
+A: exit
+   su - consultant2
+   cd /home/consultants
+   touch consultant2.txt
+   ls
+
+Q6: Exit back to workstation and finish the lab exercise.
+A: exit
+   exit
+   lab finish perms-cli

@@ -1,0 +1,33 @@
+Lab: Manage Users and Groups, Permissions, and Processes (Comprehensive Review 2)
+
+Q1: Prepare the lab environment and log in to serverb as student.
+A: lab start rhcsa-rh124-review2
+   ssh student@serverb
+
+Q2: Identify and terminate the highest CPU-consuming process (dd) using top.
+A: top   (press k -> enter PID of dd -> confirm signal 15 -> press q)
+
+Q3: Switch to root, create group 'database' (GID 50000) and user 'dbadmin1' with supplementary group database.
+A: sudo -i
+   groupadd -g 50000 database
+   useradd -G database dbadmin1
+   passwd dbadmin1   (set to redhat)
+
+Q4: Configure dbadmin1 password policy (force change on login, min 10 days, max 30 days), sudo access, and umask 007.
+A: chage -d 0 -m 10 -M 30 dbadmin1
+   echo "dbadmin1 ALL=(ALL) ALL" > /etc/sudoers.d/dbadmin1
+   su - dbadmin1
+   echo "umask 007" >> ~/.bashrc && source ~/.bashrc
+
+Q5: Create /home/dbadmin1/review2 owned by :database with rwxrwsr-t (3775) and set /home/dbadmin1 to o+x (701).
+A: mkdir /home/dbadmin1/review2
+   chown :database /home/dbadmin1/review2
+   chmod 3775 /home/dbadmin1/review2
+   chmod o+x /home/dbadmin1
+
+Q6: Exit all shells back to workstation, then grade and finish the lab exercise.
+A: exit
+   exit
+   exit
+   lab grade rhcsa-rh124-review2
+   lab finish rhcsa-rh124-review2

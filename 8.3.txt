@@ -1,0 +1,25 @@
+Guided Exercise: Monitor Process Activity
+
+Q1: Prepare the lab environment and open two terminals logged in to servera as student.
+A: lab start processes-monitor
+   ssh student@servera
+
+Q2: Create /home/student/bin/monitor CPU-load script and make it executable.
+A: mkdir /home/student/bin
+   vim /home/student/bin/monitor
+   chmod a+x /home/student/bin/monitor
+
+Q3: Launch top in right terminal and check CPU count in left terminal.
+A: top   (in right terminal; toggle headers with l, t, m)
+   lscpu
+
+Q4: Start six instances of monitor in the background to push 1-minute load average above 1.
+A: monitor &   (repeat 6 times)
+
+Q5: Terminate all monitor processes interactively inside top.
+A: In top: press k -> enter PID -> press Enter -> confirm signal 15 (SIGTERM)
+
+Q6: Quit top (q), exit servera, and finish the lab exercise on workstation.
+A: q
+   exit
+   lab finish processes-monitor

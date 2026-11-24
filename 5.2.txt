@@ -1,0 +1,23 @@
+Guided Exercise: Change the Shell Environment
+
+Q1: Prepare the lab environment and log in to servera as student.
+A: lab start edit-bashconfig
+   ssh student@servera
+
+Q2: Set PS1 prompt to include current time in ~/.bashrc and reload it.
+A: vim ~/.bashrc   (add: export PS1='[\u@\h \t \w]$ ')
+   source ~/.bashrc
+
+Q3: Create a local variable file=tmp.zdkei083, display it, list the file, and delete it.
+A: file=tmp.zdkei083
+   echo $file
+   ls -l $file
+   rm $file
+
+Q4: Set EDITOR=vim as an environment variable in a single command and verify.
+A: export EDITOR=vim
+   echo $EDITOR
+
+Q5: Exit servera and finish the lab exercise on workstation.
+A: exit
+   lab finish edit-bashconfig

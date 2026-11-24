@@ -1,0 +1,26 @@
+Guided Exercise: Configure Hostnames and Name Resolution
+
+Q1: Prepare the lab environment, log in to servera, and switch to root.
+A: lab start net-hostnames
+   ssh student@servera
+   sudo -i
+
+Q2: Check current hostname status and set static hostname to servera.lab.example.com.
+A: hostnamectl status
+   hostnamectl hostname servera.lab.example.com
+   cat /etc/hostname
+
+Q3: Temporarily set runtime hostname to testname and reboot to confirm static hostname persists.
+A: hostname testname
+   systemctl reboot
+
+Q4: Log back in as root, map 'class' to 172.25.254.254 in /etc/hosts, and verify resolution and ping.
+A: ssh student@servera && sudo -i
+   echo "172.25.254.254 classroom.example.com classroom class" >> /etc/hosts
+   getent hosts class
+   ping -c3 class
+
+Q5: Exit back to workstation and finish the lab exercise.
+A: exit
+   exit
+   lab finish net-hostnames

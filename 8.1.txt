@@ -1,0 +1,37 @@
+Guided Exercise: Control Jobs
+
+Q1: Prepare the lab environment and open two terminals logged in to servera as student.
+A: lab start processes-control
+   ssh student@servera
+
+Q2: Create /home/student/bin/control script and make it executable.
+A: mkdir /home/student/bin
+   vim /home/student/bin/control   (loop appending "$@" to ~/control_outfile every 1s)
+   chmod +x /home/student/bin/control
+
+Q3: Run 'control technical' in foreground, monitor in second terminal with tail -f, then suspend with Ctrl+Z.
+A: control technical
+   tail -f ~/control_outfile   (in right terminal)
+   Ctrl+Z
+
+Q4: View jobs and resume the stopped job in the background.
+A: jobs
+   bg
+
+Q5: Start two more instances in the background using '&'.
+A: control documents &
+   control database &
+   jobs
+
+Q6: Bring job %1 to foreground and suspend it (Ctrl+Z); bring job %2 to foreground and terminate it (Ctrl+C).
+A: fg %1   (then Ctrl+Z)
+   fg %2   (then Ctrl+C)
+
+Q7: View process states (T = stopped, S = sleeping), terminate remaining job %3, and clean up.
+A: ps jT
+   fg %3   (then Ctrl+C)
+   rm ~/control_outfile
+
+Q8: Exit servera and finish the lab exercise on workstation.
+A: exit
+   lab finish processes-control

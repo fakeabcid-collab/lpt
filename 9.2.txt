@@ -1,0 +1,27 @@
+Guided Exercise: Control System Services
+
+Q1: Prepare the lab environment, log in to servera, and switch to root.
+A: lab start services-control
+   ssh student@servera
+   sudo -i
+
+Q2: Restart sshd (changes PID) and then reload sshd (keeps same PID).
+A: systemctl restart sshd
+   systemctl reload sshd
+   systemctl status sshd
+
+Q3: Stop chronyd, verify it is still enabled, and reboot servera to confirm it starts on boot.
+A: systemctl stop chronyd
+   systemctl is-enabled chronyd
+   systemctl reboot
+
+Q4: Log back in as root, disable chronyd, and reboot to confirm it stays inactive after boot.
+A: ssh student@servera && sudo -i
+   systemctl disable chronyd
+   systemctl reboot
+
+Q5: Verify chronyd is inactive, exit servera, and finish the lab exercise.
+A: ssh student@servera
+   systemctl status chronyd
+   exit
+   lab finish services-control

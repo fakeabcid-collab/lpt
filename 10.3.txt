@@ -1,0 +1,26 @@
+Guided Exercise: Customize OpenSSH Service Configuration
+
+Q1: Prepare the lab environment, log in to serverb, and switch to operator2 (password: redhat).
+A: lab start ssh-customize
+   ssh student@serverb
+   su - operator2
+
+Q2: Generate passphrase-less SSH keys for operator2 and copy the public key to operator2@servera.
+A: ssh-keygen
+   ssh-copy-id operator2@servera
+
+Q3: Log in to servera as operator2, switch to root (password: redhat), disable root SSH login, and reload sshd.
+A: ssh operator2@servera
+   su -
+   vim /etc/ssh/sshd_config   (set: PermitRootLogin no)
+   systemctl reload sshd
+
+Q4: Disable SSH password authentication on servera, reload sshd, and verify key-only login works.
+A: vim /etc/ssh/sshd_config   (set: PasswordAuthentication no)
+   systemctl reload sshd
+
+Q5: Exit all shells back to workstation and finish the lab exercise.
+A: exit
+   exit
+   exit
+   lab finish ssh-customize

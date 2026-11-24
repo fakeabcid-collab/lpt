@@ -1,0 +1,26 @@
+Guided Exercise: Manage Local User Accounts
+
+Q1: Prepare the lab environment, log in to servera, and switch to root.
+A: lab start users-user
+   ssh student@servera
+   sudo -i
+
+Q2: Create users operator1, operator2, and operator3, and set their passwords to redhat.
+A: useradd operator1 && passwd operator1
+   useradd operator2 && passwd operator2
+   useradd operator3 && passwd operator3
+
+Q3: Add comments "Operator One" and "Operator Two" to operator1 and operator2, and verify.
+A: usermod -c "Operator One" operator1
+   usermod -c "Operator Two" operator2
+   tail /etc/passwd
+
+Q4: Delete operator3 along with its home directory and verify removal.
+A: userdel -r operator3
+   tail /etc/passwd
+   ls -l /home
+
+Q5: Exit back to workstation and finish the lab exercise.
+A: exit
+   exit
+   lab finish users-user

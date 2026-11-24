@@ -1,0 +1,25 @@
+Guided Exercise: Identify Automatically Started System Processes
+
+Q1: Prepare the lab environment and log in to servera as student.
+A: lab start services-identify
+   ssh student@servera
+
+Q2: List all installed active service units and all socket units (active and inactive).
+A: systemctl list-units --type=service
+   systemctl list-units --type=socket --all
+
+Q3: Check status of chronyd and verify its daemon PID with ps.
+A: systemctl status chronyd
+   ps -p <PID>
+
+Q4: Check if sshd is enabled and active, then view its detailed status.
+A: systemctl is-enabled sshd
+   systemctl is-active sshd
+   systemctl status sshd
+
+Q5: List enabled/disabled states for all service unit files.
+A: systemctl list-unit-files --type=service
+
+Q6: Exit servera and finish the lab exercise on workstation.
+A: exit
+   lab finish services-identify

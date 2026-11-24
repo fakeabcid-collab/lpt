@@ -1,0 +1,23 @@
+Lab: Manage Networking
+
+Q1: Prepare the lab environment, log in to serverb, and switch to root.
+A: lab start net-review
+   ssh student@serverb
+   sudo -i
+
+Q2: Create static connection profile 'lab' on eth0 (172.25.250.11/24, gateway & DNS 172.25.250.254).
+A: nmcli con add con-name lab ifname eth0 type ethernet ipv4.method manual ipv4.dns '172.25.250.254' ipv4.addresses '172.25.250.11/24' ipv4.gateway '172.25.250.254'
+
+Q3: Enable autoconnect on 'lab' and disable autoconnect on 'System eth0'.
+A: nmcli con mod "lab" connection.autoconnect yes
+   nmcli con mod "System eth0" connection.autoconnect no
+
+Q4: Add secondary IP 10.0.1.1/24 to 'lab', reload connections, and map 'private' to 10.0.1.1 in /etc/hosts.
+A: nmcli con mod "lab" +ipv4.addresses '10.0.1.1/24'
+   nmcli con reload
+   echo "10.0.1.1 private" >> /etc/hosts
+
+Q5: Reboot serverb, then grade and finish the lab exercise on workstation.
+A: systemctl reboot
+   lab grade net-review
+   lab finish net-review

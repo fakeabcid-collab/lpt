@@ -1,0 +1,27 @@
+Lab: Access Linux File Systems
+
+Q1: Prepare the lab environment, log in to serverb, and switch to root.
+A: lab start fs-review
+   ssh student@serverb
+   sudo -i
+
+Q2: Check UUID of /dev/vdb1, create /mnt/freespace, and mount /dev/vdb1 by UUID.
+A: lsblk -fp /dev/vdb
+   mkdir /mnt/freespace
+   mount UUID="<UUID>" /mnt/freespace
+
+Q3: Save disk usage report of /usr/share to /mnt/freespace/results.txt.
+A: du /usr/share > /mnt/freespace/results.txt
+
+Q4: Update locate database and save all rsyslog.conf matches to /mnt/freespace/search1.txt.
+A: updatedb
+   locate rsyslog.conf > /mnt/freespace/search1.txt
+
+Q5: Find files in /usr/share between 50 MB and 100 MB and save to /mnt/freespace/search2.txt.
+A: find /usr/share -size +50M -size -100M > /mnt/freespace/search2.txt
+
+Q6: Exit back to workstation, then grade and finish the lab exercise.
+A: exit
+   exit
+   lab grade fs-review
+   lab finish fs-review

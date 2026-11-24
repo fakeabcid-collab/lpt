@@ -1,0 +1,26 @@
+Lab: Create, View, and Edit Text Files
+
+Q1: Prepare the lab environment on workstation.
+A: lab start edit-review
+
+Q2: Assign editing_final_lab.txt to lab_file variable and redirect detailed directory listing into it.
+A: lab_file=editing_final_lab.txt
+   ls -al > $lab_file
+
+Q3: Edit $lab_file in Vim using visual modes (Shift+V for lines, v for characters, Ctrl+V for blocks).
+A: vim $lab_file
+   (Shift+V to remove first 3 lines & Desktop/Public lines; v / Ctrl+V to trim columns & timestamps; :wq to save)
+
+Q4: Back up editing_final_lab.txt with an epoch timestamp suffix.
+A: cp $lab_file editing_final_lab_$(date +%s).txt
+
+Q5: Append 12 dashes to $lab_file.
+A: echo "------------" >> $lab_file
+
+Q6: List Documents/ contents, append to $lab_file while displaying on screen, and verify.
+A: ls Documents/ | tee -a $lab_file
+   cat $lab_file
+
+Q7: Grade and finish the lab exercise on workstation.
+A: lab grade edit-review
+   lab finish edit-review

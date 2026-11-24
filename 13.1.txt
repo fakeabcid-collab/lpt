@@ -1,0 +1,26 @@
+Guided Exercise: Mount and Unmount File Systems
+
+Q1: Prepare the lab environment, log in to servera, and switch to root.
+A: lab start fs-mount
+   ssh student@servera
+   sudo -i
+
+Q2: Create /mnt/part1, check UUID of /dev/vdb1, and mount it by UUID.
+A: mkdir /mnt/part1
+   lsblk -fp /dev/vdb
+   mount UUID="<UUID>" /mnt/part1
+   lsblk -fp /dev/vdb
+
+Q3: Navigate to /mnt/part1, create testdir subdirectory, and create testdir/newmount file.
+A: cd /mnt/part1
+   mkdir testdir
+   touch testdir/newmount
+
+Q4: Leave the /mnt/part1 directory (to avoid 'target is busy') and unmount /mnt/part1.
+A: cd
+   umount /mnt/part1
+
+Q5: Exit back to workstation and finish the lab exercise.
+A: exit
+   exit
+   lab finish fs-mount

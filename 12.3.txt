@@ -1,0 +1,25 @@
+Guided Exercise: Enable DNF Software Repositories
+
+Q1: Prepare the lab environment, log in to servera, and switch to root.
+A: lab start software-repo
+   ssh student@servera
+   sudo -i
+
+Q2: Add the rht custom repo using dnf config-manager and set gpgcheck=0 in its .repo file.
+A: dnf config-manager --add-repo "http://content.example.com/rhel9.3/x86_64/rhcsa-practice/rht"
+   echo "gpgcheck=0" >> /etc/yum.repos.d/content.example.com_rhel9.3_x86_64_rhcsa-practice_rht.repo
+
+Q3: Create /etc/yum.repos.d/errata.repo for [rht-updates] with gpgcheck=0 and list all repos.
+A: vim /etc/yum.repos.d/errata.repo
+   dnf repolist all
+
+Q4: Disable rht-updates, install rht-system (v1.0.0-1), then re-enable rht-updates and upgrade rht-system (v1.0.0-2).
+A: dnf config-manager --disable rht-updates
+   dnf install rht-system
+   dnf config-manager --enable rht-updates
+   dnf update
+
+Q5: Exit back to workstation and finish the lab exercise.
+A: exit
+   exit
+   lab finish software-repo

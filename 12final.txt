@@ -1,0 +1,24 @@
+Lab: Install and Update Software Packages
+
+Q1: Prepare the lab environment, log in to serverb, and switch to root.
+A: lab start software-review
+   ssh student@serverb
+   sudo -i
+
+Q2: Configure [errata] repository in /etc/yum.repos.d/errata.repo pointing to http://content.example.com/rhel9.3/x86_64/rhcsa-practice/errata (gpgcheck=0).
+A: vim /etc/yum.repos.d/errata.repo
+
+Q3: Install rht-system and remove the cups package, then exit root shell.
+A: dnf install rht-system
+   dnf remove cups.x86_64
+   exit
+
+Q4: Inspect and install local RPM ~/rhcsa-script-1.0.0-1.noarch.rpm using sudo dnf install, and verify.
+A: rpm -qpi rhcsa-script-1.0.0-1.noarch.rpm
+   sudo dnf install rhcsa-script-1.0.0-1.noarch.rpm
+   rpm -q rhcsa-script
+
+Q5: Exit serverb, then grade and finish the lab exercise on workstation.
+A: exit
+   lab grade software-review
+   lab finish software-review

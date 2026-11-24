@@ -1,0 +1,29 @@
+Lab: Manage Files from the Command Line (Comprehensive Review 1)
+
+Q1: Prepare the lab environment and log in to serverb as student.
+A: lab start rhcsa-rh124-review1
+   ssh student@serverb
+
+Q2: Create ~/grading directory and empty files grade1, grade2, and grade3 inside it.
+A: mkdir grading
+   touch grading/grade{1,2,3}
+
+Q3: Capture first 5 lines and append last 3 lines of ~/bin/manage into ~/grading/review.txt.
+A: head -5 bin/manage > grading/review.txt
+   tail -3 bin/manage >> grading/review.txt
+
+Q4: Copy review.txt to review-copy.txt, duplicate 'Test JJ', delete 'Test HH', and insert 'Level 1 Training' between 'Test BB' and 'Test CC'.
+A: cp grading/review.txt grading/review-copy.txt
+   vim grading/review-copy.txt   (yy + p on Test JJ; dd on Test HH; insert 'Level 1 Training' above Test CC; :wq)
+
+Q5: Create hard link ~/hardcopy to grading/grade1 and symbolic link ~/softcopy to grading/grade2.
+A: ln grading/grade1 hardcopy
+   ln -s grading/grade2 softcopy
+
+Q6: Save long listing of /boot (without hidden files) to ~/grading/longlisting.txt.
+A: ls -l /boot > grading/longlisting.txt
+
+Q7: Exit serverb, then grade and finish the lab exercise on workstation.
+A: exit
+   lab grade rhcsa-rh124-review1
+   lab finish rhcsa-rh124-review1

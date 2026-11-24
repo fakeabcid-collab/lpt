@@ -1,0 +1,25 @@
+Guided Exercise: Read Manual Pages
+
+Q1: Prepare the lab environment on workstation.
+A: lab start help-manual
+
+Q2: View the gedit man page and open /home/student/manual with cursor at the end of the file.
+A: man gedit
+   gedit + manual
+
+Q3: Read section 1 of the su man page.
+A: man 1 su
+
+Q4: Open the manual page for the man command itself.
+A: man man
+
+Q5: Display a one-line description of the w command.
+A: man -f w
+
+Q6: Search man pages for detailed info on ZIP archives, kernel boot parameters, and tuning ext4 parameters.
+A: man -k zip     (finds zipinfo)
+   man -k boot    (finds bootparam)
+   man -k ext4    (finds tune2fs)
+
+Q7: Finish the lab exercise on workstation.
+A: lab finish help-manual

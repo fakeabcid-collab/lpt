@@ -1,0 +1,60 @@
+Lab: Manage Files from the Command Line
+
+Q1: Prepare the lab environment and log in to serverb as student.
+A: lab start files-review
+   ssh student@serverb
+
+Q2: Create ~/Documents/project_plans and two empty files season1_project_plan.odf and season2_project_plan.odf.
+A: mkdir -p ~/Documents/project_plans
+   touch ~/Documents/project_plans/season{1,2}_project_plan.odf
+
+Q3: Create 12 files tv_seasonX_episodeY.ogg (seasons 1-2, episodes 1-6) and 8 files mystery_chapterX.odf (1-8).
+A: touch tv_season{1..2}_episode{1..6}.ogg
+   touch mystery_chapter{1..8}.odf
+
+Q4: Create season1 and season2 under Videos and move the TV episodes into them.
+A: mkdir -p Videos/season{1..2}
+   mv tv_season1* Videos/season1
+   mv tv_season2* Videos/season2
+
+Q5: Create my_bestseller/chapters, editor, changes, and vacation directories under Documents.
+A: mkdir -p Documents/my_bestseller/{chapters,editor,changes,vacation}
+
+Q6: Move all chapters to chapters/, move chapters 1-2 to editor/, and chapters 7-8 to vacation/.
+A: cd Documents/my_bestseller/chapters
+   mv ~/mystery_chapter* .
+   mv mystery_chapter{1..2}.odf ../editor
+   mv mystery_chapter{7,8}.odf ../vacation
+
+Q7: Copy season 2 episodes 1 and 2 to vacation/ using cd - to toggle directories.
+A: cd ~/Videos/season2
+   cp *episode1.ogg ~/Documents/my_bestseller/vacation
+   cd ~/Documents/my_bestseller/vacation
+   cd -
+   cp *episode2.ogg ~/Documents/my_bestseller/vacation
+   cd -
+
+Q8: Copy chapters 5 and 6 to changes/ using square-bracket pattern matching.
+A: cd ~/Documents/my_bestseller
+   cp chapters/mystery_chapter[56].odf changes
+
+Q9: Copy mystery_chapter5.odf in changes/ with YYYY-MM-DD date and epoch timestamp suffixes.
+A: cd changes
+   cp mystery_chapter5.odf mystery_chapter5_$(date +%F).odf
+   cp mystery_chapter5.odf mystery_chapter5_$(date +%s).odf
+
+Q10: Empty and delete changes/ using rmdir, delete vacation/ using rm -r, and return home.
+A: rm mystery*
+   cd ..
+   rmdir changes
+   rm -r vacation
+   cd
+
+Q11: Create ~/Documents/backups and a hard link to season2_project_plan.odf named season2_project_plan.odf.back.
+A: mkdir ~/Documents/backups
+   ln ~/Documents/project_plans/season2_project_plan.odf ~/Documents/backups/season2_project_plan.odf.back
+
+Q12: Exit serverb, then grade and finish the lab on workstation.
+A: exit
+   lab grade files-review
+   lab finish files-review

@@ -1,0 +1,22 @@
+Guided Exercise: Validate Network Configuration
+
+Q1: Prepare the lab environment and log in to servera as student.
+A: lab start net-validate
+   ssh student@servera
+
+Q2: Identify the network interface name and MAC address, and view IPv4/IPv6 addresses.
+A: ip link
+   ip -br addr
+
+Q3: View interface packet statistics and the kernel routing table.
+A: ip -s link show <interface>
+   ip route
+
+Q4: Test connectivity to the default gateway, trace path to classroom.example.com, and list listening TCP sockets.
+A: ping -c3 172.25.250.254
+   tracepath classroom.example.com
+   ss -lt
+
+Q5: Exit servera and finish the lab exercise on workstation.
+A: exit
+   lab finish net-validate

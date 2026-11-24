@@ -1,0 +1,33 @@
+Guided Exercise: Manage User Passwords
+
+Q1: Prepare the lab environment and log in to servera as student.
+A: lab start users-password
+   ssh student@servera
+
+Q2: Lock and unlock the operator1 account.
+A: sudo usermod -L operator1
+   sudo usermod -U operator1
+
+Q3: Switch to root and set operator1 password maximum age to 90 days.
+A: sudo -i
+   chage -M 90 operator1
+   chage -l operator1
+
+Q4: Force operator1 to change password on next login, then log in as operator1 to set password to forsooth123.
+A: chage -d 0 operator1
+   exit
+   su - operator1   (change password from redhat to forsooth123)
+   exit
+
+Q5: Switch to root and set operator1 account to expire in 180 days.
+A: sudo -i
+   chage -E $(date -d "+180 days" +%F) operator1
+   chage -l operator1
+
+Q6: Set default password expiration to 180 days for all new users in /etc/login.defs.
+A: vim /etc/login.defs   (set: PASS_MAX_DAYS 180)
+
+Q7: Exit back to workstation and finish the lab exercise.
+A: exit
+   exit
+   lab finish users-password

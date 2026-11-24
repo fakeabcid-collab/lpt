@@ -1,0 +1,30 @@
+Guided Exercise: Install and Update Software Packages with DNF
+
+Q1: Prepare the lab environment, log in to servera, and switch to root.
+A: lab start software-dnf
+   ssh student@servera
+   sudo -i
+
+Q2: Search for, inspect, and install the nmap package.
+A: dnf search nmap
+   dnf info nmap
+   dnf install nmap
+
+Q3: Check removal dependencies (without confirming) for nmap and tar.
+A: dnf remove nmap   (press n)
+   dnf remove tar    (press n)
+
+Q4: List groups, inspect "Security Tools", and install the group.
+A: dnf group list
+   dnf group info "Security Tools"
+   dnf group install "Security Tools"
+
+Q5: View DNF transaction history, inspect transaction 3, and undo the nmap installation transaction.
+A: dnf history
+   dnf history info 3
+   dnf history undo 2
+
+Q6: Exit back to workstation and finish the lab exercise.
+A: exit
+   exit
+   lab finish software-dnf

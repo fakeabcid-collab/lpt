@@ -1,0 +1,31 @@
+Guided Exercise: Configure SSH Key-based Authentication
+
+Q1: Prepare the lab environment, log in to serverb, and switch to operator1 (password: redhat).
+A: lab start ssh-configure
+   ssh student@serverb
+   su - operator1
+
+Q2: Generate a passphrase-less SSH key pair, copy public key to operator1@servera, and test remote command.
+A: ssh-keygen
+   ssh-copy-id operator1@servera
+   ssh operator1@servera hostname
+
+Q3: Overwrite the key pair with a new one, verify verbose SSH fails key auth, and re-copy the new public key.
+A: ssh-keygen   (overwrite: y)
+   ssh -v operator1@servera hostname
+   ssh-copy-id operator1@servera
+
+Q4: Generate a passphrase-protected key (.ssh/key2, passphrase: redhatpass), copy to servera, and test with -i.
+A: ssh-keygen -f .ssh/key2
+   ssh-copy-id -i .ssh/key2.pub operator1@servera
+   ssh -i .ssh/key2 operator1@servera hostname
+
+Q5: Start ssh-agent, add .ssh/key2, and verify passwordless/passphrase-less SSH connection in current shell.
+A: eval $(ssh-agent)
+   ssh-add .ssh/key2
+   ssh -i .ssh/key2 operator1@servera hostname
+
+Q6: Exit all shells back to workstation and finish the lab exercise.
+A: exit
+   exit
+   lab finish ssh-configure

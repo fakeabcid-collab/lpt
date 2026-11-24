@@ -1,0 +1,36 @@
+Lab: Access the Command Line
+
+Q1: Prepare the lab environment on workstation.
+A: lab start cli-review
+
+Q2: Display the current time and date.
+A: date
+
+Q3: Display the current time in 24-hour clock format.
+A: date +%R
+
+Q4: Determine the file type of /home/student/zcat.
+A: file zcat
+
+Q5: Display the line, word, and byte count of zcat using Bash shortcut for last argument.
+A: wc Esc+.   (expands to: wc zcat)
+
+Q6: Display the first 10 lines of zcat.
+A: head Esc+.   (expands to: head zcat)
+
+Q7: Display the last 10 lines of zcat.
+A: tail Esc+.   (expands to: tail zcat)
+
+Q8: Repeat the previous command with four or fewer keystrokes.
+A: !!   (or UpArrow + Enter)
+
+Q9: Display the last 20 lines of zcat using command-line editing shortcuts.
+A: tail -n 20 zcat   (UpArrow -> Ctrl+A -> Ctrl+RightArrow -> type -n 20 -> Enter)
+
+Q10: View command history and re-run the 'date +%R' command by its history number.
+A: history
+   !2   (replace 2 with the actual command number for 'date +%R')
+
+Q11: Grade and finish the lab exercise.
+A: lab grade cli-review
+   lab finish cli-review

@@ -1,0 +1,20 @@
+Guided Exercise: Make Links Between Files
+
+Q1: Prepare the lab environment on workstation.
+A: lab start files-make
+
+Q2: Log in to servera as student.
+A: ssh student@servera
+
+Q3: Check inode/link count of files/target.file, create hard link links/file.hardlink, and verify.
+A: ls -li files/target.file
+   ln files/target.file links/file.hardlink
+   ls -li files/target.file links/file.hardlink
+
+Q4: Create symbolic link /home/student/tempdir pointing to /tmp and verify.
+A: ln -s /tmp /home/student/tempdir
+   ls -li /home/student/tempdir
+
+Q5: Exit servera and finish the lab exercise on workstation.
+A: exit
+   lab finish files-make

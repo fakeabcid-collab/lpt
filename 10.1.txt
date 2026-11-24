@@ -1,0 +1,27 @@
+Guided Exercise: Access the Remote Command Line
+
+Q1: Prepare the lab environment and log in to servera as student.
+A: lab start ssh-access
+   ssh student@servera
+
+Q2: Connect from servera to serverb as student (accept host key), check logged-in users, and exit.
+A: ssh student@serverb   (type yes, password: student)
+   w --from
+   exit
+
+Q3: Connect from servera to serverb as root (password: redhat), check logged-in users, and exit.
+A: ssh root@serverb
+   w --from
+   exit
+
+Q4: Remove ~/.ssh/known_hosts on servera, reconnect to serverb to re-accept host key, and exit.
+A: rm /home/student/.ssh/known_hosts
+   ssh student@serverb
+   exit
+
+Q5: Run hostname remotely on serverb without opening an interactive shell.
+A: ssh student@serverb hostname
+
+Q6: Exit servera and finish the lab exercise on workstation.
+A: exit
+   lab finish ssh-access

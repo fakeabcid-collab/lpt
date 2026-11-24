@@ -1,0 +1,23 @@
+Guided Exercise: Locate Files on the System
+
+Q1: Prepare the lab environment and log in to servera as student.
+A: lab start fs-locate
+   ssh student@servera
+
+Q2: Update the locate database and search for logrotate.conf and networkmanager.conf (case-insensitive).
+A: sudo updatedb
+   locate logrotate.conf
+   locate -i networkmanager.conf
+
+Q3: Find files in /var/lib owned by chrony, and files in /var owned by root and group mail.
+A: sudo find /var/lib -user chrony
+   sudo find /var -user root -group mail
+
+Q4: Find files in /usr/bin larger than 50 KB, files in /home/student modified in the last 120 mins, and block devices in /dev.
+A: find /usr/bin -size +50k
+   find /home/student -mmin -120
+   find /dev -type b
+
+Q5: Exit servera and finish the lab exercise on workstation.
+A: exit
+   lab finish fs-locate

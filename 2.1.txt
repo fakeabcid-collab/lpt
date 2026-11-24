@@ -1,0 +1,24 @@
+Guided Exercise: Access the Command Line with the Desktop
+
+Q1: Prepare the lab environment on workstation.
+A: lab start cli-desktop
+
+Q2: Log in to workstation as student.
+A: Click 'student' at GNOME login screen -> Enter password: student -> Press Enter
+
+Q3: Open Terminal and change student password to 55TurnK3y.
+A: passwd
+   (Current password: student | New password: 55TurnK3y | Retype: 55TurnK3y)
+
+Q4: Log out and log back in as student with the new password.
+A: System menu (top-right) -> Power Off/Log Out -> Log Out -> Log in with 55TurnK3y
+
+Q5: Lock and unlock the screen.
+A: Lock: System menu -> Lock button
+   Unlock: Press Enter -> Enter password: 55TurnK3y -> Press Enter
+
+Q6: Initiate shutdown from GUI and cancel it.
+A: System menu -> Power Off/Log Out -> Power Off -> Click Cancel
+
+Q7: Complete and clean up the lab exercise.
+A: lab finish cli-desktop

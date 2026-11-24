@@ -1,0 +1,31 @@
+Lab: Control Access to Files
+
+Q1: Prepare the lab environment, log in to serverb, and switch to root.
+A: lab start perms-review
+   ssh student@serverb
+   sudo -i
+
+Q2: Create /home/techdocs and set its group ownership to techdocs.
+A: mkdir /home/techdocs
+   chown :techdocs /home/techdocs
+
+Q3: Set permissions on /home/techdocs to setgid + rwx for owner and group, and no access for others (2770).
+A: chmod 2770 /home/techdocs
+   ls -ld /home/techdocs
+
+Q4: Test access as tech1 and tech2 (in techdocs group) and confirm database1 (not in group) is denied.
+A: su - tech1 -c "echo 'This is the first tech doc.' > /home/techdocs/techdoc1.txt"
+   su - tech2 -c "cat /home/techdocs/techdoc1.txt && touch /home/techdocs/techdoc2.txt"
+   su - database1 -c "cat /home/techdocs/techdoc1.txt"
+
+Q5: Set global default login shell umask to 007 in /etc/login.defs and verify as student.
+A: vim /etc/login.defs   (set: UMASK 007)
+   exit
+   exit
+   ssh student@serverb
+   umask
+
+Q6: Exit back to workstation, then grade and finish the lab exercise.
+A: exit
+   lab grade perms-review
+   lab finish perms-review

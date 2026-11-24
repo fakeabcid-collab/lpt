@@ -1,0 +1,22 @@
+Guided Exercise: Configure Networking from the Command Line
+
+Q1: Prepare the lab environment, log in to servera, and switch to root.
+A: lab start net-configure
+   ssh student@servera
+   sudo -i
+
+Q2: Inspect active network connections and device status.
+A: nmcli con show --active
+   nmcli dev status
+
+Q3: Add a static Ethernet connection named static-addr on eth0 and activate it.
+A: nmcli con add con-name static-addr ifname eth0 type ethernet ipv4.method manual ipv4.dns 172.25.250.220 ipv4.addresses 172.25.250.10/24 ipv4.gateway 172.25.250.254
+   nmcli con up static-addr
+
+Q4: Disable autoconnect on "System eth0", reboot servera, and verify static-addr is active.
+A: nmcli con mod "System eth0" connection.autoconnect no
+   systemctl reboot
+   ssh student@servera "nmcli con show --active"
+
+Q5: Finish the lab exercise on workstation.
+A: lab finish net-configure

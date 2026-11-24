@@ -1,0 +1,24 @@
+Guided Exercise: Edit Network Configuration Files
+
+Q1: Prepare the lab environment, log in to servera, and switch to root.
+A: lab start net-edit
+   ssh student@servera
+   sudo -i
+
+Q2: Add secondary IP 10.0.1.1/24 in /etc/NetworkManager/system-connections/"System eth0.nmconnection", reload, and activate.
+A: vim /etc/NetworkManager/system-connections/"System eth0.nmconnection"   (add: address2=10.0.1.1/24 under [ipv4])
+   nmcli con reload
+   nmcli con up "System eth0"
+   ip -br addr show eth0
+
+Q3: On serverb, add secondary IP 10.0.1.2/24 in "System eth0.nmconnection", reload, activate, and ping 10.0.1.1.
+A: ssh student@serverb && sudo -i
+   vim /etc/NetworkManager/system-connections/"System eth0.nmconnection"   (add: address2=10.0.1.2/24 under [ipv4])
+   nmcli con reload
+   nmcli con up "System eth0"
+   ping -c3 10.0.1.1
+
+Q4: Exit back to workstation and finish the lab exercise.
+A: exit
+   exit
+   lab finish net-edit

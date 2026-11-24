@@ -1,0 +1,31 @@
+Lab: Get Help in Red Hat Enterprise Linux
+
+Q1: Prepare the lab environment on workstation.
+A: lab start help-review
+
+Q2: Find the option to prepare a man page for printing (default PostScript).
+A: man man   (option: -t)
+
+Q3: Create a PostScript file passwd.ps from the passwd man page, verify its format, and inspect it.
+A: man -t passwd > passwd.ps
+   file /home/student/passwd.ps
+   less /home/student/passwd.ps
+
+Q4: Search man pages for PostScript viewers.
+A: man -k postscript viewer   (finds evince)
+
+Q5: Open passwd.ps in evince using default mode, preview mode, and starting at page 3.
+A: evince /home/student/passwd.ps
+   evince -w /home/student/passwd.ps
+   evince -i 3 /home/student/passwd.ps
+
+Q6: Check syntax to print only pages 2 and 3 of passwd.ps using lp.
+A: man lp
+   lp passwd.ps -P 2-3
+
+Q7: Open /usr/share/doc in Firefox to view man-db manuals and kexec-tools/kexec-kdump-howto.txt.
+A: firefox /usr/share/doc
+
+Q8: Grade and finish the lab exercise on workstation.
+A: lab grade help-review
+   lab finish help-review

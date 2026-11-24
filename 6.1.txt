@@ -1,0 +1,35 @@
+Guided Exercise: Gain Superuser Access
+
+Q1: Prepare the lab environment and log in to servera as student.
+A: lab start users-superuser
+   ssh student@servera
+
+Q2: Check current user ID, working directory, HOME, and PATH for student.
+A: id
+   pwd
+   echo $HOME
+   echo $PATH
+
+Q3: Switch to root using a non-login shell, inspect environment, and exit.
+A: sudo su
+   id; pwd; echo $HOME; echo $PATH
+   exit
+
+Q4: Switch to root using a login shell, inspect environment, and exit.
+A: sudo su -
+   id; pwd; echo $HOME; echo $PATH
+   exit
+
+Q5: Verify sudoers rule for operator1.
+A: sudo cat /etc/sudoers.d/operator1
+
+Q6: Switch to operator1 (password: redhat) and run privileged commands using sudo.
+A: su - operator1
+   sudo tail -5 /var/log/messages
+   sudo cp /etc/motd /etc/motdOLD
+   sudo rm /etc/motdOLD
+
+Q7: Exit back to workstation and finish the lab exercise.
+A: exit
+   exit
+   lab finish users-superuser

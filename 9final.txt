@@ -1,0 +1,19 @@
+Lab: Control Services and Daemons
+
+Q1: Prepare the lab environment, log in to serverb, and switch to root.
+A: lab start services-review
+   ssh student@serverb
+   sudo -i
+
+Q2: Start the psacct service and enable it to start at boot.
+A: systemctl start psacct
+   systemctl enable psacct
+
+Q3: Stop the rsyslog service and disable it from starting at boot.
+A: systemctl stop rsyslog
+   systemctl disable rsyslog
+
+Q4: Reboot serverb, then grade and finish the lab exercise on workstation.
+A: systemctl reboot
+   lab grade services-review
+   lab finish services-review

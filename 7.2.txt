@@ -1,0 +1,35 @@
+Guided Exercise: Manage Default Permissions and File Access
+
+Q1: Prepare the lab environment, log in to servera, and switch to operator1 (password: redhat).
+A: lab start perms-default
+   ssh student@servera
+   su - operator1
+
+Q2: Check default umask, create /tmp/shared and /tmp/shared/defaults, and inspect permissions.
+A: umask
+   mkdir /tmp/shared
+   touch /tmp/shared/defaults
+   ls -l /tmp/shared/defaults
+
+Q3: Change group ownership of /tmp/shared to operators and set the setgid bit so new files inherit the group.
+A: chown :operators /tmp/shared
+   chmod g+s /tmp/shared
+   touch /tmp/shared/ops_db.txt
+   ls -l /tmp/shared/ops_db.txt
+
+Q4: Temporarily change umask to 027 for operator1 and create ops_prod.txt to verify permissions.
+A: umask 027
+   touch /tmp/shared/ops_prod.txt
+   ls -l /tmp/shared/ops_prod.txt
+
+Q5: Set permanent default umask 007 in ~/.bashrc for operator1, re-login, and create ops_prod2.txt.
+A: echo "umask 007" >> ~/.bashrc
+   exit
+   ssh operator1@servera
+   umask
+   touch /tmp/shared/ops_prod2.txt
+   ls -l /tmp/shared/ops_prod2.txt
+
+Q6: Close all shells on servera and finish the lab exercise on workstation.
+A: exit
+   lab finish perms-default

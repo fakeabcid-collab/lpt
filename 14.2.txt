@@ -1,0 +1,14 @@
+Guided Exercise: Create a Diagnostics Report
+
+Q1: Prepare the lab environment, log in to servera, and start cockpit.socket.
+A: lab start support-portal
+   ssh student@servera
+   systemctl start cockpit.socket
+   systemctl status cockpit.socket
+   exit
+
+Q2: Open Cockpit in Firefox, authenticate for administrative access, and generate/download a diagnostic report labeled 'student'.
+A: Open https://servera.lab.example.com:9090 -> log in as student -> Limited access -> Diagnostic Reports -> Run report (label: student) -> Download
+
+Q3: Finish the lab exercise on workstation.
+A: lab finish support-portal

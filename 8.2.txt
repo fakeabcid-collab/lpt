@@ -1,0 +1,35 @@
+Guided Exercise: Kill Processes
+
+Q1: Prepare the lab environment and open two terminals logged in to servera as student.
+A: lab start processes-kill
+   ssh student@servera
+
+Q2: Create /home/student/bin/instance script and make it executable.
+A: mkdir /home/student/bin
+   vim /home/student/bin/instance   (loop appending "$@" to ~/instance_outfile every 5s)
+   chmod +x /home/student/bin/instance
+
+Q3: Start three background instances (network, interface, connection) and monitor ~/instance_outfile.
+A: cd /home/student/bin
+   instance network &
+   instance interface &
+   instance connection &
+   tail -f ~/instance_outfile   (in right terminal)
+
+Q4: Suspend job %1 using SIGSTOP and terminate job %2 using SIGTERM.
+A: kill -SIGSTOP %1
+   kill -SIGTERM %2
+   jobs
+
+Q5: Resume job %1 using SIGCONT, then terminate jobs %1 and %3 using SIGTERM.
+A: kill -SIGCONT %1
+   kill -SIGTERM %1
+   kill -SIGTERM %3
+
+Q6: Find and terminate the running tail process using pkill.
+A: ps -ef | grep tail
+   pkill -SIGTERM tail
+
+Q7: Exit servera and finish the lab exercise on workstation.
+A: exit
+   lab finish processes-kill
