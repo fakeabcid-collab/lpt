@@ -1,0 +1,407 @@
+================================================================================
+                 RHCSA VIVA 2-HOUR QUICK REVISION GUIDE
+================================================================================
+
+--------------------------------------------------------------------------------
+CHAPTER 2: ACCESS THE COMMAND LINE
+--------------------------------------------------------------------------------
+* Shell vs. Terminal:
+  - Terminal: Text-based interface window (e.g., GNOME Terminal) or virtual
+    console (Ctrl+Alt+F2 to F6).
+  - Shell: Command interpreter (default: Bash - Bourne Again Shell) that
+    translates typed commands into system calls for the Linux kernel.
+
+* Prompt Anatomy: [student@servera ~]$
+  - student : Current logged-in username.
+  - servera : Short hostname of the machine.
+  - ~       : Current working directory (~ = user home dir, /home/student).
+  - $ vs #  : '$' indicates regular user; '#' indicates root superuser (UID 0).
+
+* Command Syntax: command [options] [arguments] (e.g., ls -l /boot)
+  - Options   : Modify behavior (short options like -l combine as -la;
+                long options use --all).
+  - Arguments : Specify the target file, directory, or object.
+
+* Essential Shortcuts:
+  - Tab           : Auto-completes commands and file paths.
+  - Ctrl+C        : Terminates a running foreground command.
+  - Ctrl+D        : Sends End-of-File (EOF) / logs out of current shell.
+  - Ctrl+L        : Clears the terminal screen.
+  - Ctrl+A / Ctrl+E : Jumps cursor to start / end of the command line.
+
+[VIVA CHECK]
+Q: What is the difference between a shell and a kernel?
+A: The kernel manages hardware, memory, and CPU scheduling; the shell is the
+   user-space program that interprets user commands and asks the kernel to
+   execute them.
+
+
+--------------------------------------------------------------------------------
+CHAPTER 3: MANAGE FILES FROM THE COMMAND LINE
+--------------------------------------------------------------------------------
+1. Linux File System Hierarchy (FHS)
+   Everything in Linux starts at the root directory (/):
+   - /boot : Kernel (vmlinuz), initial RAM disk (initramfs), bootloader (GRUB2).
+   - /dev  : Device files representing hardware (e.g., /dev/vda for disks).
+   - /etc  : System-wide config files (always text, e.g., /etc/fstab).
+   - /home : Home directories for regular users (e.g., /home/student).
+   - /root : Root user's home dir (kept separate from /home for recovery).
+   - /run  : Temporary runtime data (cleared automatically at reboot).
+   - /tmp  : World-writable temporary space for users and applications.
+   - /usr  : Installed system software, binaries (/usr/bin), libraries (/usr/lib).
+   - /var  : Variable data that changes frequently (logs in /var/log, spools).
+
+2. Paths & Core Commands
+   - Absolute Path : Starts from / (e.g., /home/student/file). Works anywhere.
+   - Relative Path : Starts from current working directory (e.g., grading/file).
+                     '.' = current directory; '..' = parent directory.
+   - pwd           : Print working directory.
+   - ls -la        : List all files (-a includes hidden '.' files) in long
+                     format (-l shows permissions, links, owner, group, size).
+   - mkdir -p d1/d2: Create directory and any missing parent directories (-p).
+   - cp -r src dst : Copy files or directories recursively (-r).
+   - mv old new    : Move or rename files and directories.
+   - rm -rf dir    : Forcefully (-f) and recursively (-r) delete a directory.
+
+3. Hard Links vs. Symbolic (Soft) Links
++--------------------+----------------------------+----------------------------+
+| Feature            | Hard Link                  | Symbolic Link              |
+|                    | (ln target linkname)       | (ln -s target linkname)    |
++--------------------+----------------------------+----------------------------+
+| Underlying         | Points directly to same    | Separate small file with   |
+| Structure          | inode (data blocks).       | own inode storing path.    |
++--------------------+----------------------------+----------------------------+
+| Cross Filesystems? | No (inodes are unique      | Yes (can link across       |
+|                    | per filesystem).           | partitions and drives).    |
++--------------------+----------------------------+----------------------------+
+| Link Directories?  | No (prevented to avoid     | Yes.                       |
+|                    | filesystem loops).         |                            |
++--------------------+----------------------------+----------------------------+
+| If Original is     | Data remains intact while  | Becomes a broken           |
+| Deleted            | at least 1 link exists.    | ("dangling") link.         |
++--------------------+----------------------------+----------------------------+
+
+4. Shell Expansions
+   - Pattern Matching (Globbing):
+     * '*' matches zero or more characters.
+     * '?' matches any single character.
+     * '[a-c]' matches one character within the specified range.
+   - Brace Expansion: Generates strings before execution.
+     Example: touch file{1..3}.txt -> creates file1.txt, file2.txt, file3.txt
+   - Command Substitution: $(command) replaces expression with stdout.
+     Example: echo "Today is $(date)"
+
+
+--------------------------------------------------------------------------------
+CHAPTER 4: GET HELP IN RED HAT ENTERPRISE LINUX
+--------------------------------------------------------------------------------
+* man (Manual Pages): man <command> opens documentation.
+  Numbered Sections:
+  - Section 1 : User commands (e.g., passwd)
+  - Section 5 : File formats and configuration files (e.g., passwd, fstab)
+  - Section 8 : System administration commands (e.g., useradd, mount)
+  - Tip       : Specify section if duplicate exists: man 5 passwd vs man 1 passwd
+
+* Searching Man Pages:
+  - man -k <keyword> (or apropos <keyword>): Searches short descriptions across
+    all man pages (requires mandb to be updated).
+  - Inside man: Press '/word' to search forward; press 'n' for next match.
+
+* Quick Help & Docs:
+  - <command> --help : Prints concise syntax and option flags to terminal.
+  - /usr/share/doc/  : Holds extended package docs and sample config files.
+
+
+--------------------------------------------------------------------------------
+CHAPTER 5: CREATE, VIEW, AND EDIT TEXT FILES
+--------------------------------------------------------------------------------
+1. Standard Streams & Redirection
+   Every Linux process has three standard I/O channels (file descriptors):
+   - Standard Input  (stdin  - FD 0) : Keyboard input.
+   - Standard Output (stdout - FD 1) : Normal command output.
+   - Standard Error  (stderr - FD 2) : Error messages.
+
+   Redirection Operators:
+   - command > file       : Redirects stdout and overwrites file.
+   - command >> file      : Redirects stdout and appends to file.
+   - command 2> file      : Redirects stderr to file.
+   - command &> file      : Sends both stdout and stderr to the same file
+                            (equivalent to: command > file 2>&1).
+   - 2>/dev/null          : Discards error messages (e.g., hiding "Permission
+                            denied" when running find).
+
+2. Pipes & tee
+   - cmd1 | cmd2     : Sends stdout of cmd1 directly into stdin of cmd2.
+   - cmd | tee file  : Displays output on screen AND writes it to file.
+
+3. Vim & Shell Environment
+   - Vim Modes:
+     * Normal/Command Mode (default): yy (copy line), p (paste), dd (delete
+       line), u (undo). Press Esc from any mode to return here.
+     * Insert Mode (press 'i'): Type and edit text directly.
+     * Extended Command Mode (press ':'): :w (save), :q (quit), :wq (save and
+       quit), :q! (force quit without saving).
+   - Shell Variables & Startup Files:
+     * Local variable : VAR=value (exists only in current shell).
+     * Environment var: export VAR=value (inherited by child processes).
+     * Startup files  : Persistent user settings (aliases, umask) go in
+                        ~/.bashrc or ~/.bash_profile.
+
+
+--------------------------------------------------------------------------------
+CHAPTER 6: MANAGE LOCAL USERS AND GROUPS
+--------------------------------------------------------------------------------
+1. Account Databases
+   - /etc/passwd : User info (username:x:UID:GID:GECOS:home_dir:shell).
+                   'x' means password hash is stored in /etc/shadow.
+   - /etc/shadow : Readable only by root; stores password hashes & aging rules.
+   - /etc/group  : Group definitions (groupname:x:GID:member_list).
+   - UID Ranges  : 0 = root; 1-999 = system/service accounts; 1000+ = regular.
+
+2. Managing Users, Groups, Passwords & Sudo
+   - Groups:
+     * groupadd -g 50000 database : Creates group with specific GID 50000.
+     * Every user has ONE primary group (assigned to new files) and zero or
+       more supplementary groups (for shared access).
+   - Users:
+     * useradd -G database dbadmin1 : Creates user + supplementary group.
+     * usermod -aG wheel dbadmin1   : Appends (-a) supplementary group (-G).
+       WARNING: Omitting -a overwrites and removes existing groups!
+     * userdel -r username          : Deletes user and home directory (-r).
+     * Verification                 : id username OR getent passwd username
+   - Password Aging (chage):
+     * chage -m 10 -M 30 -d 0 dbadmin1 : Min 10 days (-m), max 30 days (-M),
+       and sets last change to epoch 0 (-d 0) to force reset on next login.
+     * usermod -L user / usermod -U user : Locks / unlocks an account password.
+   - Superuser Access (sudo):
+     * Adding a user to the 'wheel' group grants sudo privileges on RHEL.
+     * Always edit /etc/sudoers (or /etc/sudoers.d/*) with 'visudo' to check
+       syntax before saving and avoid locking out root access.
+
+
+--------------------------------------------------------------------------------
+CHAPTER 7: CONTROL ACCESS TO FILES
+--------------------------------------------------------------------------------
+1. Standard Permissions (rwx)
+   Evaluated in strict order: User (owner) -> Group -> Others.
+   - On a File      : r (4) = read; w (2) = modify; x (1) = execute as program.
+   - On a Directory : r (4) = list names (ls); w (2) = create/delete/rename
+                      files inside (requires x); x (1) = enter/traverse (cd).
+   - chmod 640 file       : Owner rw- (6), Group r-- (4), Others --- (0).
+   - chown user:group file: Changes owner and group simultaneously.
+
+2. Special Permissions & umask
+   - SUID (4xxx / u+s) : Executable runs with permissions of the file owner
+                         (e.g., /usr/bin/passwd runs as root).
+   - SGID (2xxx / g+s) : On a directory, new files/subdirs inherit the
+                         directory's group instead of creator's primary group.
+   - Sticky Bit (1xxx / o+t): On shared writable dirs (/tmp), users can only
+                         delete or rename files they own.
+   - Collaboration Dir : Combine SGID (2) + Sticky Bit (1) = 3.
+                         Example: chmod 3775 /shared
+   - umask             : Bits subtracted from defaults (666 files, 777 dirs).
+                         * umask 022 -> files 644, directories 755
+                         * umask 007 -> files 660, directories 770
+
+
+--------------------------------------------------------------------------------
+CHAPTER 8: MONITOR AND MANAGE LINUX PROCESSES
+--------------------------------------------------------------------------------
+* Process Basics: Every running program has a unique PID and Parent PID (PPID).
+  States:
+  - R : Running or runnable.
+  - S : Interruptible sleep (waiting for an event).
+  - D : Uninterruptible sleep (usually waiting on disk I/O).
+  - T : Stopped / suspended.
+  - Z : Zombie (terminated, waiting for parent to read exit status).
+
+* Monitoring:
+  - ps aux : Static snapshot of all processes (USER, PID, %CPU, %MEM, STAT).
+  - top    : Real-time monitor ('P' sort CPU, 'M' sort memory, 'k' kill, 'q' quit).
+
+* Signals & Termination:
+  - kill <PID>    : Sends SIGTERM (15) - polite request to clean up and exit.
+  - kill -9 <PID> : Sends SIGKILL (9) - kernel immediately destroys process
+                    without cleanup (cannot be ignored; use as last resort).
+  - pkill <name>  : Kills processes matching the name.
+
+* Job Control & Priority:
+  - command &         : Runs command in the background.
+  - Ctrl+Z            : Suspends (stops) a foreground job.
+  - jobs              : Lists active shell jobs (%1, %2).
+  - bg %1 / fg %1     : Resumes stopped job in background / foreground.
+  - nice -n 10 cmd    : Starts command with custom priority (-20 high to +19 low).
+  - renice 5 -p <PID> : Adjusts priority of an already running process.
+
+
+--------------------------------------------------------------------------------
+CHAPTER 9: CONTROL SERVICES AND DAEMONS
+--------------------------------------------------------------------------------
+* systemd (PID 1): First process started by the Linux kernel at boot. Manages
+  background services (daemons, e.g., sshd, chronyd) via unit files (.service,
+  .target, .socket).
+
+* Essential systemctl Commands:
+  - systemctl status sshd       : Check active state, boot status, recent logs.
+  - systemctl start sshd        : Start service immediately.
+  - systemctl stop sshd         : Stop service immediately.
+  - systemctl restart sshd      : Stop and start service (new PID).
+  - systemctl reload sshd       : Reload config files without dropping sessions.
+  - systemctl enable --now sshd : Enable at boot AND start immediately.
+  - systemctl disable sshd      : Prevent automatic start at boot.
+
+
+--------------------------------------------------------------------------------
+CHAPTER 10: CONFIGURE AND SECURE SSH
+--------------------------------------------------------------------------------
+* How SSH Works: Secure Shell (TCP port 22) encrypts remote terminal sessions
+  and file transfers (scp, sftp).
+
+* SSH Key-Based Authentication:
+  1. Generate Key Pair (client) : ssh-keygen -t ed25519
+     Creates private key (~/.ssh/id_ed25519) & public key (~/.ssh/id_ed25519.pub).
+  2. Copy Public Key to Server  : ssh-copy-id user@servera
+     Appends public key into ~/.ssh/authorized_keys on the target server.
+  3. Connect                    : ssh user@servera (or ssh -i ~/.ssh/custom_key)
+
+* Hardening OpenSSH (/etc/ssh/sshd_config):
+  - PermitRootLogin no        : Blocks direct root SSH login; forces admins to
+                                log in as regular users and escalate via sudo.
+  - PasswordAuthentication no : Enforces key-only authentication.
+  - Golden Rule               : Always run 'sshd -t' to verify config syntax,
+                                then 'systemctl reload sshd' while keeping your
+                                current SSH session open to avoid lockout.
+
+
+--------------------------------------------------------------------------------
+CHAPTER 11: MANAGE NETWORKING
+--------------------------------------------------------------------------------
+* Core Terms:
+  - IPv4 & Prefix   : e.g., 172.25.250.111/24 (/24 = netmask 255.255.255.0;
+                      first 24 bits = network, last 8 bits = host).
+  - Default Gateway : Router IP used to reach external subnets.
+  - DNS             : Translates hostnames into IP addresses.
+
+* NetworkManager & nmcli:
+  - nmcli device status     : Show hardware/virtual interfaces and state.
+  - nmcli connection show   : List saved connection profiles.
+  - Add Static Profile      :
+    nmcli connection add con-name static type ethernet ifname eth0 \
+      ipv4.addresses 172.25.250.111/24 ipv4.gateway 172.25.250.254 \
+      ipv4.dns 172.25.250.254 ipv4.method manual
+  - Add Secondary IP        :
+    nmcli connection modify static +ipv4.addresses 172.25.250.211/24
+  - Activate Profile        : nmcli connection up static
+
+* Hostname & Name Resolution:
+  - hostnamectl hostname server1.example.com : Sets persistent hostname in
+    /etc/hostname.
+  - Resolution Order: Configured in /etc/nsswitch.conf (hosts: files dns).
+    System checks /etc/hosts locally before querying DNS servers.
+  - Verification    : getent hosts <name>, ip a, ip route, ping -c 3 <ip>
+
+
+--------------------------------------------------------------------------------
+CHAPTER 12: INSTALL AND UPDATE SOFTWARE PACKAGES
+--------------------------------------------------------------------------------
+* Red Hat Subscription Management:
+  - subscription-manager register --auto-attach : Registers system for repos.
+  - subscription-manager status                 : Verifies subscription state.
+
+* RPM vs. DNF:
+  - RPM (Low-level package manager; does NOT resolve dependencies):
+    * rpm -qa               : List all installed packages.
+    * rpm -qi <pkg>         : Show detailed package information.
+    * rpm -ql <pkg>         : List all files installed by a package.
+    * rpm -qf /path/to/file : Identify which package owns a specific file.
+  - DNF (High-level manager; uses /etc/yum.repos.d/*.repo & resolves deps):
+    * dnf search <keyword> / dnf info <pkg>
+    * dnf install <pkg> / dnf remove <pkg>
+    * dnf update            : Updates all installed packages and kernel.
+    * dnf history           : View and undo/rollback past transactions.
+
+
+--------------------------------------------------------------------------------
+CHAPTER 13: ACCESS LINUX FILE SYSTEMS
+--------------------------------------------------------------------------------
+* Storage Concepts: Block devices (/dev/vda) are partitioned (/dev/vda1) or
+  used with LVM, formatted with a filesystem (XFS is RHEL default; ext4 is
+  common), and attached (mounted) onto an empty directory (mount point).
+
+* Inspection Commands:
+  - lsblk -f : Tree view of block devices, filesystems, UUIDs, mount points.
+  - blkid    : Displays exact UUID and filesystem type for block devices.
+  - df -hT   : Human-readable disk space usage and filesystem types.
+  - findmnt  : Verifies currently active mounts.
+
+* Temporary vs. Persistent Mounting:
+  - Temporary : mount /dev/vdb1 /mnt/data (lost on reboot).
+                umount /mnt/data (fails if a shell is inside the directory).
+  - Persistent: Add 6-column entry to /etc/fstab using UUID:
+                UUID=a1b2c3d4-...  /mnt/data  xfs  defaults  0 0
+  - Critical Verification: Always run 'mount -a' after editing /etc/fstab to
+    catch syntax typos immediately before rebooting into emergency mode.
+
+* Locating Files:
+  - locate <name> : Fast search using prebuilt database (updated via updatedb).
+  - find          : Live filesystem search:
+    * find / -name 'file.txt' 2>/dev/null
+    * find / -user contractor1 -group contractor -perm 640 -type f 2>/dev/null
+    * find / -type f -size 100c 2>/dev/null (c=bytes, k=KiB, M=MiB, +10M=>10M)
+
+
+--------------------------------------------------------------------------------
+CHAPTER 14: ANALYZE SERVERS AND GET SUPPORT
+--------------------------------------------------------------------------------
+* Cockpit (Web Console): Browser-based admin UI on TCP port 9090
+  (cockpit.socket). Monitors CPU/memory, manages services, logs, and storage.
+* sosreport: Command (from 'sos' package) that collects hardware details, logs,
+  RPMs, and configs into a compressed .tar.xz in /var/tmp/ for Red Hat Support.
+* Red Hat Insights: Cloud-based analytics service (insights-client) that scans
+  RHEL systems for vulnerabilities/bottlenecks and provides Ansible playbooks.
+
+
+--------------------------------------------------------------------------------
+CHAPTER 15: RAPID-FIRE VIVA MOCK QUESTIONS (COMPREHENSIVE REVIEW)
+--------------------------------------------------------------------------------
+1. Q: Why use usermod -aG instead of usermod -G?
+   A: -G alone overwrites existing supplementary groups, removing the user from
+      previous groups. -a (append) preserves existing memberships.
+
+2. Q: You set chmod 770 /project, why can't a group member cd into /project?
+   A: Either the user hasn't logged out/in to refresh group tokens, or a parent
+      directory lacks execute (x) permission (e.g., chmod 711), blocking traversal.
+
+3. Q: Explain chmod 3775 /team in one sentence.
+   A: 3 sets SGID (2: new files inherit directory's group) and Sticky Bit
+      (1: users only delete own files), while 775 gives owner/group rwx and
+      others r-x.
+
+4. Q: A process ignores kill 1420. What do you do next and why?
+   A: Run kill -9 1420. Standard kill sends SIGTERM (15), which can be ignored;
+      -9 sends SIGKILL, forcing the kernel to terminate it immediately.
+
+5. Q: Why use UUIDs instead of /dev/sdb1 in /etc/fstab?
+   A: Device names like /dev/sdb can shift if disks are added/removed or
+      detected in a different order, whereas UUIDs are tied to the filesystem.
+
+6. Q: What happens if you edit /etc/fstab with a syntax error and reboot?
+   A: The system fails to mount the filesystem at boot and drops into emergency
+      mode. Running 'mount -a' beforehand tests all entries safely.
+
+7. Q: What is the difference between systemctl restart and systemctl reload?
+   A: restart stops and starts the daemon (changing PID and dropping active
+      connections); reload keeps the same PID and re-reads config files.
+
+8. Q: How do you safely apply changes to /etc/ssh/sshd_config?
+   A: Validate syntax with 'sshd -t', run 'systemctl reload sshd', and test a
+      new login in a second terminal while keeping your current session open.
+
+9. Q: What is the difference between > and >>?
+   A: '>' redirects stdout and overwrites the target file; '>>' appends stdout
+      to the end of the file without erasing existing data.
+
+10. Q: How does a Linux system resolve a hostname to an IP address?
+    A: Guided by /etc/nsswitch.conf, it checks local static entries in
+       /etc/hosts first, then queries configured DNS servers.
+================================================================================
